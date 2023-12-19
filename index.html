@@ -20,7 +20,53 @@
             color: black;
         }
     </style>
-    
+    <style>
+        /* Your existing styles here */
+
+        #tictactoe {
+            padding: 20px;
+            text-align: center;
+            color: black;
+        }
+
+        #board-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #tic-tac-toe-board {
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        #tic-tac-toe-board td {
+            width: 60px;
+            height: 60px;
+            border: 1px solid black;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        #game-status {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        button {
+            background: linear-gradient(to right, brown, red);
+            color: black;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: linear-gradient(to right, red, brown);
+        }
+    </style>
 </head>
 <body>
     <header style="background-image: url(https://i.gifer.com/WBVi.gif);">
@@ -243,6 +289,90 @@
             }
         </script>
     </section>
+    
+    <section id="tictactoe" style="background-image: url(https://images.unsplash.com/photo-1560403022-0a173b4d0ef1?q=80&w=1800&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);">
+        <h2>Tic-Tac-Toe Game</h2>
+        <div id="board-container">
+            <table id="tic-tac-toe-board">
+                <tr>
+                    <td id="cell-1" onclick="makeMove(1)"></td>
+                    <td id="cell-2" onclick="makeMove(2)"></td>
+                    <td id="cell-3" onclick="makeMove(3)"></td>
+                </tr>
+                <tr>
+                    <td id="cell-4" onclick="makeMove(4)"></td>
+                    <td id="cell-5" onclick="makeMove(5)"></td>
+                    <td id="cell-6" onclick="makeMove(6)"></td>
+                </tr>
+                <tr>
+                    <td id="cell-7" onclick="makeMove(7)"></td>
+                    <td id="cell-8" onclick="makeMove(8)"></td>
+                    <td id="cell-9" onclick="makeMove(9)"></td>
+                </tr>
+            </table>
+            <div id="game-status"></div>
+            <button onclick="resetGame()">Reset Game</button>
+        </div>
+        <script>
+            let currentPlayer = 'X';
+            let gameBoard = ['', '', '', '', '', '', '', '', ''];
+            let gameActive = true;
+        
+            function makeMove(cellIndex) {
+                if (gameBoard[cellIndex - 1] === '' && gameActive) {
+                    gameBoard[cellIndex - 1] = currentPlayer;
+                    const cellElement = document.getElementById(`cell-${cellIndex}`);
+                    cellElement.innerText = currentPlayer;
+                    cellElement.style.color = currentPlayer === 'X' ? 'black' : 'black';
+        
+                    if (checkWin() || checkTie()) {
+                        gameActive = false;
+                        document.getElementById('game-status').innerText = `Game Over! ${checkWin() ? currentPlayer + ' wins!' : 'It\'s a tie!'}`;
+                    } else {
+                        currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+                        document.getElementById('game-status').innerText = `Current Player: ${currentPlayer}`;
+                    }
+                }
+            }
+        
+            function checkWin() {
+                const winPatterns = [
+                    [0, 1, 2], [3, 4, 5], [6, 7, 8], 
+                    [0, 3, 6], [1, 4, 7], [2, 5, 8], 
+                    [0, 4, 8], [2, 4, 6] 
+                ];
+        
+                for (const pattern of winPatterns) {
+                    const [a, b, c] = pattern;
+                    if (gameBoard[a] !== '' && gameBoard[a] === gameBoard[b] && gameBoard[a] === gameBoard[c]) {
+                        return true;
+                    }
+                }
+        
+                return false;
+            }
+        
+            function checkTie() {
+                return !gameBoard.includes('') && !checkWin();
+            }
+        
+            function resetGame() {
+                currentPlayer = 'X';
+                gameBoard = ['', '', '', '', '', '', '', '', ''];
+                gameActive = true;
+        
+                // Reset the board
+                for (let i = 1; i <= 9; i++) {
+                    const cellElement = document.getElementById(`cell-${i}`);
+                    cellElement.innerText = '';
+                    cellElement.style.color = 'black';
+                }
+        
+                document.getElementById('game-status').innerText = 'Current Player: X';
+            }
+        </script>
+        
+</section>
     <footer>
         <p>&copy; 2023 Integration of HTML Websites</p>
     </footer>
