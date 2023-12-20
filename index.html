@@ -7,6 +7,13 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
+        body {
+          font-family: Arial, sans-serif;
+          text-align: center;
+          margin: 50px;
+        }
+      </style>
+    <style>
         #form-creation {
             background-image: url(https://images.unsplash.com/photo-1625225230517-7426c1be750c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
             color: black;
@@ -370,8 +377,36 @@
         
                 document.getElementById('game-status').innerText = 'Current Player: X';
             }
-        </script>
-        
+        </script>   
+</section>
+<section>
+    <h1>Number Divisibility Checker</h1>
+  <input type="number" id="numberInput">
+  <button onclick="checkDivisibility()">Check</button>
+
+  <script>
+    function checkDivisibility() {
+      const numberInput = document.getElementById('numberInput').value;
+      const number = parseInt(numberInput, 10);
+      
+      if (isNaN(number)) {
+        console.log('Please enter a valid number.');
+        return;
+      }
+
+      const pim = 3;
+      const pom = 5;
+
+      if (number % pim === 0 && number % pom === 0) {
+        console.log(`PimPom`);
+      } else if (number % pim === 0) {
+        console.log(`Pim`);
+      } else if (number % pom === 0) {
+        console.log(`Pom`);
+      } 
+    }
+  </script>
+
 </section>
     <footer>
         <p>&copy; 2023 Integration of HTML Websites</p>
